@@ -14,10 +14,8 @@
   set document(title: titles.join(" "), author: author)
   set page(
     paper: "a4",
-    margin: (top: 30mm, bottom: 30mm, left: 30mm, right: 20mm),
+    margin: (top: 30mm, bottom: 50mm, left: 15mm, right: 15mm),
   )
-  set text(spacing: 3pt, size: 12pt)
-  set align(center)
 
   v(0.5cm)
   figure(image("agh.svg", width: 12%))
@@ -35,9 +33,11 @@
     weight: 700,
     size: 12pt,
   )
+  set align(center)
 
-  v(3cm)
+  figure(image("agh.svg", width: 12%))
 
+  v(1.5cm)
   text(
     if masters [Praca dyplomowa] else [Projekt dyplomowy],
     weight: 800,
@@ -89,6 +89,10 @@
   ]
 
   pagebreak(to: "odd")
+  set page(
+    numbering: "1",
+  )
+  pagebreak()
 
   set align(left)
   v(1cm)
@@ -128,6 +132,12 @@
     text(size: 1.25em, body)
   }
 
+
+  set list(
+    spacing: 1.3em,
+    body-indent: 0.3em,
+    marker: text(size: 0.75em, sym.circle.filled),
+  )
 
   body
   pagebreak(to: "odd")
