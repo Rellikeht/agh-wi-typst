@@ -7,8 +7,10 @@
   masters: bool,
   department: [Department],
   acknowledgements: (),
-  body
+  sans-font: "Liberation Sans",
+  body,
 ) = {
+  let sans(..args) = text(font: sans-font, ..args)
   set document(title: titles.join(" "), author: author)
   set page(
     paper: "a4",
@@ -90,22 +92,42 @@
 
   set align(left)
   v(1cm)
-  outline(title: [
-    Spis treści
-    #v(0.5cm)
+  outline(
+    title: [
+      #set text(size: 1.4em, weight: 900)
+      #v(1.5cm)
+      #sans(size: 1.1em, weight: 700, [Spis treści])
+      #v(1cm)
     ],
-  indent: 18pt)
+    indent: 18pt,
+  )
 
   pagebreak(to: "odd")
+  set par(
+    linebreaks: "optimized",
+    first-line-indent: (all: true, amount: 0.5cm),
+    leading: 0.55em,
+    spacing: 0.8em,
+  )
 
-  set page(numbering: "1")
-  set heading(numbering: "1.1")
-  set par(first-line-indent: 1.25cm)
-  show heading: pad.with(left: 0cm, bottom: 0.5cm)
+  set heading(numbering: "1.1.")
+  show heading: body => sans(weight: 600, body) // weight just in case
+  show heading.where(level: 1): body => {
+    pagebreak(weak: true)
+    v(2.4cm)
+    text(size: 1.5em, body)
+    v(0.5cm)
+  }
+  show heading.where(level: 2): body => {
+    v(0.22cm)
+    text(size: 1.25em, body)
+    v(0.2cm)
+  }
+  show heading.where(level: 3): body => {
+    v(0.25em)
+    text(size: 1.25em, body)
+  }
 
-  show heading: it => block(inset: (left: (it.level - 1) * 1.25cm), [
-    #it
-  ])
 
   body
   pagebreak(to: "odd")
