@@ -17,11 +17,8 @@
   set text(spacing: 3pt, size: 12pt)
   set align(center)
 
-  figure(
-    image("agh.jpg", width: 15%)
-  )
-
   v(0.5cm)
+  figure(image("agh.svg", width: 12%))
 
   text(
     upper("Akademia Górniczo-Hutnicza im. Stanisława Staszica w Krakowie"),
