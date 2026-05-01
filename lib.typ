@@ -17,20 +17,8 @@
     margin: (top: 30mm, bottom: 50mm, left: 15mm, right: 15mm),
   )
 
-  v(0.5cm)
-  figure(image("agh.svg", width: 12%))
-
-  text(
-    upper("Akademia Górniczo-Hutnicza im. Stanisława Staszica w Krakowie"),
-    weight: 900,
-    size: 12pt
-  )
-
-  v(0cm)
-
-  text(
-    department,
-    weight: 700,
+  set text(
+    // spacing: 3pt,
     size: 12pt,
   )
   set align(center)
