@@ -39,54 +39,73 @@
 
   v(1.5cm)
   text(
-    if masters [Praca dyplomowa] else [Projekt dyplomowy],
-    weight: 800,
-    size: 16pt,
+    "Akademia Górniczo-Hutnicza im. Stanisława Staszica w Krakowie",
+    weight: 700,
+    size: 15pt,
   )
 
   v(0cm)
+  text(
+    department,
+    weight: 200,
+    size: 14pt,
+  )
 
-  for c in titles [
-    #text(
-      c,
-      weight: 500,
-      size: 16pt,
+  v(1.25cm)
+  text(
+    if masters [PRACA DYPLOMOWA] else [PROJEKT DYPLOMOWY],
+    weight: 300,
+    size: 13pt,
+  )
+
+  v(0.9cm)
+  text(
+    titles.at(0),
+    weight: 800,
+    size: 17pt,
+  )
+  if titles.len() > 1 {
+    parbreak()
+    text(
+      titles.at(1),
+      weight: 800,
+      size: 11pt,
     )
-
-    #v(0cm)
-  ]
-    
+  }
 
   align(bottom)[
-    #table(
-      stroke: (bottom: 0pt, left: 0pt, right: 0pt, top: 0pt),
-      align: left,
-      columns: 2,
-      [Autor pracy:],
-      author,
-      [Kierunek studiów:],
-      course,
-      [Opiekun pracy:],
-      supervisor,
-    )
+    #set text(size: 12pt)
+    #align(left)[
+      #table(
+        stroke: (bottom: 0pt, left: 0pt, right: 0pt, top: 0pt),
+        align: left,
+        row-gutter: -0.1em,
+        column-gutter: 1.0em,
+        columns: 2,
+        [Autor:], text(weight: 700, author),
+        [Kierunek:], text(weight: 700, course),
+        [Opiekun pracy:], text(weight: 700, supervisor),
+      )
+    ]
 
-    #v(3cm)
-
+    #v(1cm)
     #let today = datetime.today()
-    Kraków #today.year()
+    Kraków, #today.year()
+    #v(1cm)
   ]
 
-  pagebreak(to: "odd")
-
-  align(bottom + right)[
-    #block(width:70%)[
-      #set align(right)
-      #for a in acknowledgements [
-        #a
-        #v(0cm)
+  if acknowledgements.len() > 0 {
+    pagebreak(to: "odd")
+    align(bottom + right)[
+      #block(width: 70%)[
+        #set align(right)
+        #for a in acknowledgements [
+          #a
+          #v(0cm)
+        ]
       ]
     ]
-  ]
+  }
 
   pagebreak(to: "odd")
   set page(
