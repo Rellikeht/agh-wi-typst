@@ -146,6 +146,28 @@
     marker: text(size: 0.75em, sym.circle.filled),
   )
 
+  show figure.where(kind: image): set figure(
+    supplement: n => context {
+      "Rysunek "
+      str(counter(heading).get().at(0))
+      "."
+      h(-measure([#" "]).width)
+    },
+    numbering: "1.: ",
+  )
+  show figure.where(kind: image): set figure.caption(separator: none)
+
+  show figure.where(kind: table): set figure(
+    supplement: n => context {
+      "Tabela "
+      str(counter(heading).get().at(0))
+      "."
+      h(-measure([#" "]).width)
+    },
+    numbering: "1.: ",
+  )
+  show figure.where(kind: table): set figure.caption(separator: none)
+
   body
   pagebreak(to: "odd")
   bibliography
