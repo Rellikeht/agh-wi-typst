@@ -168,6 +168,62 @@
   )
   show figure.where(kind: table): set figure.caption(separator: none)
 
+  let numbered_code(lang: "", code) = {
+    let contents
+    if type(code) == content {
+      contents = code.text
+    } else if type(code) == str {
+      contents = code
+      code = raw(block: true, lang: lang, code)
+    }
+
+    let inset = 0.5em
+    let stroke = 0.5pt
+    let numbers = ""
+    let cur = 1
+    // TODO padding
+    for line in contents.split("\n") {
+      numbers += str(cur) + "\n"
+      cur += 1
+    }
+
+    grid(
+      columns: (auto, auto),
+      column-gutter: 0.3em,
+      block(
+        inset: (y: inset + stroke),
+        if contents != "" {
+          if lang != "" {
+            // safer ???
+            context {
+              let raw_size = measure(```python def```).height
+              set par(leading: 0.6505em)
+              set text(2.3535 * raw_size)
+              raw(block: true, lang: "", numbers)
+            }
+            // set par(leading: 0.6505em)
+            // set text(1.15em)
+            // raw(block: true, lang: "", numbers)
+          } else {
+            raw(block: true, lang: "", numbers)
+          }
+        },
+      ),
+
+      block(
+        inset: inset,
+        stroke: stroke,
+        code,
+      ),
+    )
+  }
+
+  // TODO `context` disable recursion
+  show raw.where(block: true): body => {
+    if body.lang == none or body.lang == "" { return body }
+    numbered_code(lang: body.lang, body)
+  }
+
   body
   pagebreak(to: "odd")
   bibliography
