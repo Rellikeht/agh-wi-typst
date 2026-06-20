@@ -143,30 +143,34 @@
   set list(
     spacing: 1.3em,
     body-indent: 0.3em,
-    marker: text(size: 0.75em, sym.circle.filled),
+    marker: text(size: 0.75em, baseline: -0.24em, sym.circle.filled),
   )
 
-  show figure.where(kind: image): set figure(
-    supplement: n => context {
-      "Rysunek "
-      str(counter(heading).get().at(0))
-      "."
-      h(-measure([#" "]).width)
-    },
-    numbering: "1.: ",
-  )
-  show figure.where(kind: image): set figure.caption(separator: none)
+  show figure.where(kind: image): {
+    set figure(
+      supplement: n => context {
+        "Rysunek "
+        str(counter(heading).get().at(0))
+        "."
+        h(-measure([#" "]).width)
+      },
+      numbering: "1.: ",
+    )
+    set figure.caption(separator: none)
+  }
 
-  show figure.where(kind: table): set figure(
-    supplement: n => context {
-      "Tabela "
-      str(counter(heading).get().at(0))
-      "."
-      h(-measure([#" "]).width)
-    },
-    numbering: "1.: ",
-  )
-  show figure.where(kind: table): set figure.caption(separator: none)
+  show figure.where(kind: table): {
+    set figure(
+      supplement: n => context {
+        "Tabela "
+        str(counter(heading).get().at(0))
+        "."
+        h(-measure([#" "]).width)
+      },
+      numbering: "1.: ",
+    )
+    set figure.caption(separator: none)
+  }
 
   let numbered_code(lang: "", code) = {
     let contents
