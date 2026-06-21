@@ -1,6 +1,6 @@
 #let agh(
   titles: (),
-  bibliography: none,
+  bibliography-content: none,
   author: [Author],
   supervisor: [Supervisor],
   course: [Course],
@@ -100,6 +100,7 @@
     numbering: "1",
   )
   pagebreak()
+  // End of title pages
 
   set align(left)
   v(1cm)
@@ -228,7 +229,30 @@
     numbered_code(lang: body.lang, body)
   }
 
+  // https://github.com/typst/typst/discussions/4143
+  show cite: it => {
+    // Only color the number, not the brackets.
+    show regex("\d+"): set text(fill: rgb("#00FF00"))
+    // or regex("[\p{L}\d+]+") when using the alpha-numerical style
+    it
+  }
+
+  set bibliography(title: "Bibliografia", style: "bib_format.csl")
+  show bibliography: body => {
+    set text(weight: 100, spacing: 150%, size: 1.0em)
+    show regex("URL") : it => text(size: 0.72em, it)
+    show regex(": ") : it => text(size: 1.05em, it)
+    show link: it => text(
+      fill: rgb("#00ADEF"),
+      // TODO monospace font
+      font: sans-font,
+      size: 0.8em,
+      it
+    )
+    body
+  }
+
   body
   pagebreak(to: "odd")
-  bibliography
+  bibliography-content
 }

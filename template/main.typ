@@ -11,7 +11,7 @@
     "Dziękuję moim kolegom i koleżankom, którzy pomogli mi w realizacji tego projektu.",
   ),
   masters: false,
-  bibliography: bibliography("refs.bib", title: "Bibliografia"),
+  bibliography-content: bibliography("refs.bib"),
 )
 
 = Wstęp
