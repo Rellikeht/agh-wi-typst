@@ -23,8 +23,7 @@
   )
   set align(center)
 
-  figure(image("agh.svg", width: 12%))
-
+  image("agh.svg", width: 12%)
   v(1.5cm)
   text(
     "Akademia Górniczo-Hutnicza im. Stanisława Staszica w Krakowie",
@@ -147,31 +146,30 @@
     marker: text(size: 0.75em, baseline: -0.24em, sym.circle.filled),
   )
 
-  show figure.where(kind: image): {
-    set figure(
-      supplement: n => context {
-        "Rysunek "
-        str(counter(heading).get().at(0))
-        "."
-        h(-measure([#" "]).width)
-      },
-      numbering: "1.: ",
-    )
-    set figure.caption(separator: none)
+  let figure_supplement(text) = {
+    text
+    str(counter(heading).get().at(0))
+    "."
+    h(-measure([#" "]).width)
+  }
+  set figure.caption(separator: none)
+  set figure(numbering: "1.: ")
+  show figure: body => {
+    v(0.5em)
+    body
+    v(0.5em)
   }
 
-  show figure.where(kind: table): {
-    set figure(
-      supplement: n => context {
-        "Tabela "
-        str(counter(heading).get().at(0))
-        "."
-        h(-measure([#" "]).width)
-      },
-      numbering: "1.: ",
-    )
-    set figure.caption(separator: none)
-  }
+  show figure.where(kind: image): set figure(
+    supplement: n => context figure_supplement("Rysunek "),
+  )
+  show figure.where(kind: table): set figure(
+    supplement: n => context figure_supplement("Tabela "),
+  )
+  show figure.where(kind: raw): set figure(
+    supplement: n => context figure_supplement("Kod "),
+  )
+  show figure.where(kind: raw): set block(breakable: true)
 
   let numbered_code(lang: "", code) = {
     let contents
