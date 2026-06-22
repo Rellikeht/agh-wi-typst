@@ -194,7 +194,7 @@
 
     grid(
       columns: (auto, auto),
-      column-gutter: 0.3em,
+      column-gutter: 0.4em,
       block(
         inset: (y: inset + stroke),
         if contents != "" {
@@ -218,6 +218,7 @@
       block(
         inset: inset,
         stroke: stroke,
+        width: 100%,
         code,
       ),
     )
@@ -240,14 +241,14 @@
   set bibliography(title: "Bibliografia", style: "bib_format.csl")
   show bibliography: body => {
     set text(weight: 100, spacing: 150%, size: 1.0em)
-    show regex("URL") : it => text(size: 0.72em, it)
-    show regex(": ") : it => text(size: 1.05em, it)
+    show regex("URL"): it => text(size: 0.75em, it)
+    show regex(": "): it => text(size: 1.05em, it)
     show link: it => text(
       fill: rgb("#00ADEF"),
       // TODO monospace font
       font: sans-font,
-      size: 0.8em,
-      it
+      size: 0.85em,
+      it,
     )
     body
   }
