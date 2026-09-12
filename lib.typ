@@ -95,12 +95,10 @@
   }
 
   pagebreak(to: "odd")
-  set page(
-    numbering: "1",
-  )
   pagebreak()
-  // End of title pages
+  // end of title pages
 
+  set page(numbering: "i")
   set align(left)
 
   show outline.entry: it => {
@@ -110,12 +108,15 @@
     let ref_fill = box(width: 1fr, repeat(gap: gap_size, [.]))
     // TODO correct page of element
     let ref_page = it.element.location().page()
-    let ref_link = h(0.8em) + link(
-      it.element.location(),
-      text(
-        fill: rgb("#0000FF"),
-        [#ref_page],
-      ),
+    let ref_link = (
+      h(0.8em)
+        + link(
+          it.element.location(),
+          text(
+            fill: rgb("#0000FF"),
+            [#ref_page],
+          ),
+        )
     )
 
     if it.element.level == 1 {
@@ -137,6 +138,7 @@
     indent: 18pt,
   )
 
+  set page(numbering: none)
   pagebreak(to: "odd")
   set par(
     linebreaks: "optimized",
@@ -260,11 +262,14 @@
     it
   }
 
+  // (neo)vim syntax highlight breaks with this just passed as an
+  // function argument
+  let colon_regex = ": "
   set bibliography(title: "Bibliografia", style: "bib_format.csl")
   show bibliography: body => {
     set text(weight: 100, spacing: 150%, size: 1.0em)
     show regex("URL"): it => text(size: 0.75em, it)
-    show regex(": "): it => text(size: 1.05em, it)
+    show regex(colon_regex): it => text(size: 1.05em, it)
     show link: it => text(
       fill: rgb("#00ADEF"),
       // TODO monospace font
@@ -275,6 +280,8 @@
     body
   }
 
+  set page(numbering: "1")
+  counter(page).update(1)
   body
   pagebreak(to: "odd")
   bibliography-content
