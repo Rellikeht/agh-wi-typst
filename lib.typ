@@ -11,16 +11,9 @@
   body,
 ) = {
   let sans(..args) = text(font: sans-font, ..args)
-  set document(title: titles.join(" "), author: author)
-  set page(
-    paper: "a4",
-    margin: (top: 30mm, bottom: 50mm, left: 15mm, right: 15mm),
-  )
 
-  set text(
-    // spacing: 3pt,
-    size: 12pt,
-  )
+  // TITLE PAGE {{{
+
   set align(center)
 
   image("agh.svg", width: 12%)
@@ -94,6 +87,11 @@
     ]
   }
 
+
+  //  }}}
+
+  // INDEX {{{
+
   pagebreak(to: "odd")
   pagebreak()
   // end of title pages
@@ -140,13 +138,29 @@
 
   set page(numbering: none)
   pagebreak(to: "odd")
+
+  //  }}}
+
+  // GLOBAL SETTINGS {{{
+
+  // DOCUMENT
+  set document(title: titles.join(" "), author: author)
+  set page(
+    paper: "a4",
+    margin: (top: 30mm, bottom: 50mm, left: 15mm, right: 15mm),
+  )
+
+  // TEXT
   set par(
     linebreaks: "optimized",
     first-line-indent: (all: true, amount: 0.5cm),
     leading: 0.55em,
     spacing: 0.8em,
   )
-
+  set text(
+    // spacing: 3pt,
+    size: 12pt,
+  )
   set heading(numbering: "1.1.")
   show heading: body => sans(weight: 600, body) // weight just in case
   show heading.where(level: 1): body => {
@@ -166,12 +180,16 @@
   }
 
 
+  // LISTS
   set list(
     spacing: 1.3em,
     body-indent: 0.3em,
     marker: text(size: 0.75em, baseline: -0.24em, sym.circle.filled),
   )
+  show list: body => v(0.4em) + body
+  show list.item: body => block(breakable: false, body)
 
+  // FIGURES
   let figure_supplement(text) = {
     text
     str(counter(heading).get().at(0))
@@ -185,7 +203,6 @@
     body
     v(0.5em)
   }
-
   show figure.where(kind: image): set figure(
     supplement: n => context figure_supplement("Rysunek "),
   )
@@ -197,6 +214,7 @@
   )
   show figure.where(kind: raw): set block(breakable: true)
 
+  // CODE
   let numbered_code(lang: "", code) = {
     let contents
     if type(code) == content {
@@ -251,9 +269,12 @@
   // TODO `context` disable recursion
   show raw.where(block: true): body => {
     if body.lang == none or body.lang == "" { return body }
+    // for some reason this isn't default
+    set align(left)
     numbered_code(lang: body.lang, body)
   }
 
+  // BIBLIOGRAHY
   // https://github.com/typst/typst/discussions/4143
   show cite: it => {
     // Only color the number, not the brackets.
@@ -280,9 +301,19 @@
     body
   }
 
+  //  }}}
+
+  // CONTENT
   set page(numbering: "1")
   counter(page).update(1)
   body
   pagebreak(to: "odd")
   bibliography-content
+
+  // TODO
+  // - u góry strony linia i sekcja, ale nie na stronach gdzie ta
+  // sekcja się zaczyna
+  // - u dołu strony linia i numer, ale w spisie treści rzymskimi
+  // - spis rysunków
+  // - spis tabel
 }
