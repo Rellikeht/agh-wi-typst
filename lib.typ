@@ -102,13 +102,37 @@
   // End of title pages
 
   set align(left)
-  v(1cm)
+
+  show outline.entry: it => {
+    let gap_size = 0.5em
+    let ref_name = it.prefix() + h(0.5em) + it.body() + h(gap_size)
+    // TODO align dots (hard with almost no gain)
+    let ref_fill = box(width: 1fr, repeat(gap: gap_size, [.]))
+    // TODO correct page of element
+    let ref_page = it.element.location().page()
+    let ref_link = h(0.8em) + link(
+      it.element.location(),
+      text(
+        fill: rgb("#0000FF"),
+        [#ref_page],
+      ),
+    )
+
+    if it.element.level == 1 {
+      ref_name = text(weight: 900, ref_name)
+      ref_fill = box(width: 1fr, repeat(gap: gap_size, [ ]))
+      ref_link = text(weight: 900, ref_link)
+      v(0.8em)
+    }
+    it.indented(ref_name + ref_fill, ref_link)
+  }
+
   outline(
     title: [
       #set text(size: 1.4em, weight: 900)
       #v(1.5cm)
       #sans(size: 1.1em, weight: 700, [Spis treści])
-      #v(1cm)
+      #v(0.6em)
     ],
     indent: 18pt,
   )
