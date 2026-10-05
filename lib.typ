@@ -7,24 +7,41 @@
   masters: bool,
   department: [Department],
   acknowledgements: (),
+  ai-statement: none,
+  abstract: [],
   sans-font: "Liberation Sans",
   body,
 ) = {
-  let sans(..args) = text(font: sans-font, ..args)
+  // global settings {{{
 
-  // TITLE PAGE {{{
+  let sans(..args) = text(font: sans-font, ..args)
+  // let sans(..args) = if sans-font == none {
+  //   text(..args)
+  // } else {
+  //   text(font: sans-font, ..args)
+  // }
+
+  set document(title: titles.join(" "), author: author)
+  set page(
+    paper: "a4",
+    margin: (top: 30mm, bottom: 50mm, left: 15mm, right: 15mm),
+  )
+
+  //  }}}
+
+  // title page {{{
 
   set align(center)
 
-  image("agh.svg", width: 12%)
+  image("agh.svg", width: 11.7%)
   v(1.5cm)
   text(
     "Akademia Górniczo-Hutnicza im. Stanisława Staszica w Krakowie",
     weight: 700,
-    size: 15pt,
+    size: 14pt,
   )
 
-  v(0cm)
+  v(0.2em)
   text(
     department,
     weight: 200,
@@ -56,22 +73,23 @@
   align(bottom)[
     #set text(size: 12pt)
     #align(left)[
-      #table(
+      #h(1.0cm)
+      #box(table(
         stroke: (bottom: 0pt, left: 0pt, right: 0pt, top: 0pt),
         align: left,
         row-gutter: -0.1em,
         column-gutter: 1.0em,
-        columns: 2,
+        columns: (auto, auto),
         [Autor:], text(weight: 700, author),
         [Kierunek:], text(weight: 700, course),
         [Opiekun pracy:], text(weight: 700, supervisor),
-      )
+      ))
     ]
 
-    #v(1cm)
+    #v(1.2cm)
     #let today = datetime.today()
     Kraków, #today.year()
-    #v(1cm)
+    #v(0.8cm)
   ]
 
   if acknowledgements.len() > 0 {
@@ -87,14 +105,46 @@
     ]
   }
 
+  //  }}}
+
+  // AI and abstract {{{
+
+  if ai-statement != none {
+    pagebreak(to: "odd")
+    // pagebreak()
+    {
+      set align(left + bottom)
+      set par(justify: true)
+      set text(size: 1em, style: "italic")
+      grid(
+        columns: (3.5cm, auto),
+        [], ai-statement,
+      )
+      v(1.0cm)
+    }
+  }
+
+  pagebreak(to: "odd")
+  // pagebreak()
+
+  v(-4.0cm)
+  align(
+    center + horizon,
+    heading(level: 3, [Streszczenie], outlined: false, bookmarked: false),
+  )
+  {
+    v(0.8em)
+    set align(left)
+    set par(justify: true)
+    abstract
+  }
 
   //  }}}
 
-  // INDEX {{{
+  // index {{{
 
   pagebreak(to: "odd")
-  pagebreak()
-  // end of title pages
+  // pagebreak()
 
   set page(numbering: "i")
   set align(left)
@@ -141,14 +191,8 @@
 
   //  }}}
 
-  // GLOBAL SETTINGS {{{
+  // document settings {{{
 
-  // DOCUMENT
-  set document(title: titles.join(" "), author: author)
-  set page(
-    paper: "a4",
-    margin: (top: 30mm, bottom: 50mm, left: 15mm, right: 15mm),
-  )
 
   // TEXT
   set par(
@@ -303,7 +347,6 @@
 
   //  }}}
 
-  // CONTENT
   set page(numbering: "1")
   counter(page).update(1)
   body
