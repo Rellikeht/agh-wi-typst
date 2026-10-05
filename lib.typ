@@ -8,10 +8,11 @@
   department: [Department],
   acknowledgements: (),
   ai-statement: none,
-  abstract: [],
+  abstract: none,
   sans-font: "Liberation Sans",
   body,
 ) = {
+
   // global settings {{{
 
   let sans(..args) = text(font: sans-font, ..args)
@@ -135,17 +136,19 @@
     }
   }
 
-  pagebreak(to: "odd")
-  v(-4.0cm)
-  align(
-    center + horizon,
-    heading(level: 3, [Streszczenie], outlined: false, bookmarked: false),
-  )
-  {
-    v(0.8em)
-    set align(left)
-    set par(justify: true)
-    abstract
+  if abstract != none {
+    pagebreak(to: "odd")
+    v(-4.0cm)
+    align(
+      center + horizon,
+      heading(level: 3, [Streszczenie], outlined: false, bookmarked: false),
+    )
+    {
+      v(0.8em)
+      set align(left)
+      set par(justify: true)
+      abstract
+    }
   }
 
   //  }}}
@@ -350,11 +353,4 @@
   body
   pagebreak(to: "odd")
   bibliography-content
-
-  // TODO
-  // - u góry strony linia i sekcja, ale nie na stronach gdzie ta
-  // sekcja się zaczyna
-  // - u dołu strony linia i numer, ale w spisie treści rzymskimi
-  // - spis rysunków
-  // - spis tabel
 }
