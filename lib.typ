@@ -154,8 +154,10 @@
     let ref_name = it.prefix() + h(0.5em) + it.body() + h(gap_size)
     // TODO align dots (hard with almost no gain)
     let ref_fill = box(width: 1fr, repeat(gap: gap_size, [.]))
-    // TODO correct page of element
-    let ref_page = it.element.location().page()
+    let ref_page = context {
+      let first_page = query(selector(heading).after(here())).first().location().page()
+      1 + it.element.location().page() - first_page
+    }
     let ref_link = (
       h(0.8em)
         + link(
