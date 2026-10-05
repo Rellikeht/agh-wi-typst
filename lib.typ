@@ -105,13 +105,15 @@
     ]
   }
 
+  // needed only after here
+  set page(margin: (outside: 30mm, inside: 15mm))
+
   //  }}}
 
   // AI and abstract {{{
 
   if ai-statement != none {
     pagebreak(to: "odd")
-    // pagebreak()
     {
       set align(left + bottom)
       set par(justify: true)
@@ -125,8 +127,6 @@
   }
 
   pagebreak(to: "odd")
-  // pagebreak()
-
   v(-4.0cm)
   align(
     center + horizon,
@@ -144,8 +144,6 @@
   // index {{{
 
   pagebreak(to: "odd")
-  // pagebreak()
-
   set page(numbering: "i")
   set align(left)
 
@@ -194,7 +192,6 @@
   //  }}}
 
   // document settings {{{
-
 
   // TEXT
   set par(
