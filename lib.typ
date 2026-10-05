@@ -27,6 +27,15 @@
     margin: (top: 30mm, bottom: 50mm, left: 15mm, right: 15mm),
   )
 
+  set par(
+    linebreaks: "optimized",
+    first-line-indent: (all: true, amount: 0.5cm),
+    leading: 0.55em,
+    spacing: 0.8em,
+    justify: true,
+  )
+  set text(size: 12pt)
+
   //  }}}
 
   // title page {{{
@@ -194,16 +203,6 @@
   // document settings {{{
 
   // TEXT
-  set par(
-    linebreaks: "optimized",
-    first-line-indent: (all: true, amount: 0.5cm),
-    leading: 0.55em,
-    spacing: 0.8em,
-  )
-  set text(
-    // spacing: 3pt,
-    size: 12pt,
-  )
   set heading(numbering: "1.1.")
   show heading: body => sans(weight: 600, body) // weight just in case
   show heading.where(level: 1): body => {
